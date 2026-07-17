@@ -1,8 +1,10 @@
-FROM python:3.9
-EXPOSE 8080
+FROM python:3.12-slim
+
 WORKDIR /app
-COPY requirements.txt .
-COPY *.py .
-COPY payment.ini .
-RUN pip3 install -r requirements.txt
-CMD ["uwsgi", "--ini", "payment.ini"]
+
+COPY requirements.txt ./
+RUN pip install --no-cache-dir -r requirements.txt
+
+COPY . .
+
+CMD ["python", "payment.py"]
